@@ -1,38 +1,993 @@
 .App {
+  font-family: 'League Spartan', Arial, sans-serif;
+  text-align: center;
+  background-color: white; /* Set the main background to white */
+  color: white; /* Keep text color white */
+}
+
+
+.header {
+  background-color: #fff; /* White background for the header */
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed; /* Make the header fixed */
+  width: 100%; /* Ensure it takes the full width */
+  top: 0; /* Align it to the top */
+  z-index: 1000; /* Ensure it's above other content */
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
+}
+
+.header-line {
+  width: 100%; /* Full width */
+  height: 2px; /* Thickness of the line */
+  background: linear-gradient(to right, transparent, #00806a, transparent); /* Gradient fading out */
+  position: absolute;
+  bottom: 0; /* Align to the bottom of the header */
+  left: 0; /* Start from the left */
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 50px; /* Ensure the logo height is fixed to avoid resizing issues */
+  margin-left: 20px;
+  margin-right: 20px; /* Add some space between the logo and the nav buttons */
+}
+
+.header-nav {
+  display: flex;
+  gap: 40px; /* Space between links */
+  margin-left: 40px;
+  flex-grow: 1; /* Allow the nav to take up remaining space */
+  justify-content: flex-start; /* Align the nav buttons to the left */
+}
+
+.header-right {
+  margin-right: 100px; /* Add some margin to the right */
+  white-space: nowrap; /* Prevent the buttons from wrapping to the next line */
+}
+
+.nav-button {
+  color: #00806a; /* Text color */
+  text-decoration: none; /* Remove underline */
+  font-weight: 600;
+  font-size: 1.15em;
+  margin-top: 10px;
+  cursor: pointer; /* Ensure the cursor indicates it's clickable */
+  position: relative; /* Necessary for the pseudo-element */
+  padding-bottom: 5px; /* Add some space below the text */
+  transition: color 0.3s ease; /* Smooth transition for color */
+}
+
+.nav-button::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background-color: #00806a; /* Underline color */
+  left: 0;
+  bottom: 0;
+  transition: width 0.3s ease; /* Smooth transition for underline */
+}
+
+.nav-button:hover::after {
+  width: 100%; /* Expand underline to full width on hover */
+}
+
+.nav-button:hover {
+  color: #004d40; /* Darker color on hover */
+}
+
+.section-line {
+  width: 80%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #00806a, transparent);
+  margin: 20px auto;
+}
+
+.section-tour-planner .section-line:first-of-type {
+  margin-top: -40px; /* Move the top line closer to the header */
+  margin-bottom: 40px; /* Adjust the space below the top line */
+}
+
+.section-tour-planner .section-line:last-of-type {
+  margin-top: 200px; /* Add space above the bottom line */
+  margin-bottom: -40px; /* Move the bottom line lower down */
+}
+
+.main-content {
+  padding-top: 120px; /* Add top padding equal to the header height to prevent content overlap */
+  color: #004d40; /* Dark green text for the main content */
+  position: relative;
+  z-index: 1;
+}
+
+.app-description {
+  font-size: 4em; /* Adjust font size for the description */
+  margin: 20px 0;
+  display: block; /* Ensure description is block level */
+  font-weight: 600;
+  color: #00806a;
+  line-height: 1.5; /* Adjust the height between lines (e.g., 1.5 is 150% of the font size) */
+}
+
+.app-buttons {
+  display: block; /* Ensure buttons container takes full width */
+  margin-top: 10px; /* Add margin-top to separate from description */
+}
+
+.store-button-img {
+  margin: 5px 5px;
+  width: 150px; /* Adjust the width as necessary */
+  cursor: pointer;
+  display: inline-block; /* Keep buttons inline, but force new line due to block container */
+}
+
+.app-images-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; /* Align items to the bottom */
+  margin-top: 225px; /* Adjust as needed for spacing */
+  position: relative;
+  z-index: 0;
+}
+
+@keyframes fadeInGlow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.app-image-wrapper {
+  position: relative; /* Position relative to allow absolute positioning of the glow */
+  margin: 0 20px;
+}
+
+.app-image-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%; /* Adjust the width for the glow */
+  height: 100%; /* Adjust the height for the glow */
+  background-color: #00806a; /* Glowing color */
+  transform: translate(-50%, -50%) scale(1); /* Center and slightly scale the glow */
+  border-radius: 50% 50% 60% 40% / 40% 60% 50% 50%; /* Create a deformed circle */
+  filter: blur(100px); /* Apply a smaller blur for a softer glow */
+  z-index: -1; /* Ensure the glow is behind the image */
+  opacity: 0; /* Start fully transparent */
+  animation: fadeInGlow 2s ease-out forwards; /* Fade-in animation */
+}
+
+.glow-wrapper {
+  position: relative; /* Position relative to allow absolute positioning of the glow */
+  margin: 0 20px;
+  z-index: 10;
+}
+
+.glow-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 60%;
+  left: 75%;
+  width: 100%; /* Adjust the width for the glow */
+  height: 100%; /* Adjust the height for the glow */
+  background-color: #00806a; /* Glowing color */
+  transform: translate(-50%, -50%) scale(1); /* Center and slightly scale the glow */
+  border-radius: 50% 50% 60% 40% / 40% 60% 50% 50%; /* Create a deformed circle */
+  filter: blur(100px); /* Apply a smaller blur for a softer glow */
+  z-index: -1; /* Ensure the glow is behind the image */
+  opacity: 0; /* Start fully transparent */
+  animation: fadeInGlow 2s ease-out forwards; /* Fade-in animation */
+}
+
+.get-info-image .glow-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%; /* Adjust width */
+  height: 100%; /* Adjust height */
+  background-color: #00806a; /* Glowing color */
+  transform: translate(-50%, -50%) scale(1); /* Center and slightly scale the glow */
+  border-radius: 50% 50% 60% 40% / 40% 60% 50% 50%; /* Create a deformed circle */
+  filter: blur(80px); /* Apply a smaller blur for a softer glow */
+  z-index: -1; /* Ensure the glow is behind the image */
+  opacity: 0; /* Start fully transparent */
+  animation: fadeInGlow 2s ease-out forwards; /* Fade-in animation */
+}
+
+.achievements-image .glow-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%; /* Adjust width */
+  height: 100%; /* Adjust height */
+  background-color: #00806a; /* Glowing color */
+  transform: translate(-50%, -50%) scale(1); /* Center and slightly scale the glow */
+  border-radius: 50% 50% 60% 40% / 40% 60% 50% 50%; /* Create a deformed circle */
+  filter: blur(80px); /* Apply a smaller blur for a softer glow */
+  z-index: -1; /* Ensure the glow is behind the image */
+  opacity: 0; /* Start fully transparent */
+  animation: fadeInGlow 2s ease-out forwards; /* Fade-in animation */
+}
+
+@keyframes slideUpLeft {
+  0% {
+    transform: translateY(50vh);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0); /* Final position for the left image */
+    opacity: 1;
+  }
+}
+
+@keyframes slideUpRight {
+  0% {
+    transform: translateY(50vh);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(-75px); /* Final position for the right image */
+    opacity: 1;
+  }
+}
+
+@keyframes slideUpCenter {
+  0% {
+    transform: translateY(50vh);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(-150px); /* Final position for the center image */
+    opacity: 1;
+  }
+}
+
+.app-image {
+  width: 300px; /* Adjust the width to match the desired size */
+  height: auto; /* Maintain the aspect ratio */
+  opacity: 0; /* Start with the images hidden */
+}
+
+.app-image.left {
+  animation: slideUpLeft 1s ease-out forwards;
+  animation-delay: 0s; /* Left image animates first */
+}
+
+.app-image.right {
+  animation: slideUpRight 1s ease-out forwards;
+  animation-delay: 0.2s; /* Right image animates 0.3 seconds after the left */
+}
+
+.app-image.center {
+  animation: slideUpCenter 1s ease-out forwards;
+  animation-delay: 0.4s; /* Center image animates 0.6 seconds after the left */
+}
+
+.section-features {
+  padding: 60px 20px 0 20px; /* Adjusted bottom padding and added some side padding */
+  background-color: #004d40; /* Dark green background for this section */
+  color: white; /* White text for contrast */
+  position: relative;
+  top: -250px; /* Move the section up */
+  z-index: 1;
+  overflow: hidden; /* Hide any overflow */
+}
+
+.section-features h2 {
+  font-size: 0.9em;
+  text-transform: uppercase;
+  margin: 10px auto 25px;
+}
+
+.section-features p {
+  font-size: 2.5em;
+  max-width: 700px;
+  margin: 0 auto 20px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.section-features .more-features {
+  margin-top: 20px;
+  font-size: 1.5em;
+  color: #fff; /* White text color to match the section background */
+  text-align: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.features-cards {
   display: flex;
-  flex-direction: column;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  scroll-snap-type: x mandatory; /* Snap to the start of each card */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  gap: 50px; /* Reduced gap between cards */
+  justify-content: center; /* Center the cards horizontally */
+  flex-wrap: wrap; /* Allow cards to wrap to the next row if needed */
+}
+
+.feature-card {
+  position: relative;
+  background-color: white;
+  border-radius: 10px;
+  width: 400px; /* Adjust width as necessary */
+  height: 550px; /* Adjust height as necessary */
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.feature-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.feature-card-image:first-of-type {
+  object-position: 75% center; /* Adjust as needed */
+}
+
+.card-content {
+  position: absolute;
+  bottom: 0; /* Position at the bottom of the card */
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent background to make text readable */
+  color: white; /* Text color to contrast against the background */
+  padding: 10px 20px;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+.card-content h3 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.card-content p {
+  margin-top: 10px;
+  font-size: 1em;
+}
+
+/* Tour Planner Section */
+.section-tour-planner {
+  color: #00806a;
+  padding: 0px;
+}
+
+.section-tour-planner h2 {
+  font-size: 0.9em;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  color: #00806a;
+  position: relative;
+  padding-left: 40px;
+}
+
+.section-tour-planner h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 30px;
+  height: 1px;
+  background-color: #00806a;
+  transform: translateY(-50%);
+}
+
+.tour-planner-content {
+  display: flex;
   align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tour-planner-text {
+  max-width: 50%;
+  text-align: left;
+}
+
+.tour-planner-title {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.tour-planner-description {
+  font-size: 1.2em;
+  line-height: 1.5;
+  margin-bottom: 30px;
+}
+
+.tour-planner-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  color: white;
+  background-color: #00806a;
+  border-radius: 25px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.tour-planner-button:hover {
+  background-color: #004d40;
+}
+
+.tour-planner-images {
+  display: flex;
+  position: relative; /* This makes it possible to position children absolutely */
+  width: 800px; /* Set a fixed width for the image container */
+  height: 400px; /* Set a fixed height for the image container */
+  z-index: 0;
+}
+
+.tour-planner-image-1,
+.tour-planner-image-2 {
+  position: absolute;
+  transition: transform 0.1s ease-out; /* Smooth transition effect */
+}
+
+.tour-planner-image-1 {
+  z-index: 2; /* Make sure the first image is on top */
+  bottom: 100px; /* Adjust position as needed */
+  left: 100px; /* Adjust position as needed */
+}
+
+.tour-planner-image-2 {
+  z-index: 1; /* Second image behind the first */
+  bottom: 50px; /* Adjust position as needed */
+  left: 350px; /* Adjust position as needed */
+}
+
+.section-get-info {
+  color: #00806a;
+  padding: 0px;
+  margin: 150px auto;
+}
+
+.section-get-info h2 {
+  font-size: 0.9em;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  color: #00806a;
+  position: relative;
+  padding-left: 40px;
+}
+
+.section-get-info h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 30px;
+  height: 1px;
+  background-color: #00806a;
+  transform: translateY(-50%);
+}
+
+.get-info-content {
+  display: flex;
+  flex-direction: column; /* Stack the text and button vertically */
+  align-items: flex-start; /* Align text to the left */
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.get-info-text {
+  width: 50%;
+  text-align: left; /* Keep the text aligned to the left */
+}
+
+.get-info-title {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.get-info-description {
+  font-size: 1.2em;
+  line-height: 1.5;
+  margin-bottom: 30px;
+}
+
+.get-info-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  color: white;
+  background-color: #00806a;
+  border-radius: 25px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  margin-bottom: 20px; /* Add margin to create space for the image */
+}
+
+.get-info-button:hover {
+  background-color: #004d40;
+}
+
+.get-info-image {
+  display: flex;
+  position: relative; /* This makes it possible to position children absolutely */
+  justify-content: center; /* Center the image */
+  margin: 0 auto; /* Center the image container */
+  margin-top: 20px; /* Add space between the button and the image */
+}
+
+.get-info-image-1 {
+  z-index: 1;
+  max-width: 100%; /* Ensure the image does not exceed the container width */
+  width: 400px; /* Set a fixed width for the image */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.section-achievements {
+  color: #00806a;
+  padding: 0px 20px;
+}
+
+.section-achievements h2 {
+  font-size: 0.9em;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #00806a;
+  position: relative;
+  padding-left: 40px;
+}
+
+.section-achievements h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 30px;
+  height: 1px;
+  background-color: #00806a;
+  transform: translateY(-50%);
+}
+
+.achievements-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.achievements-image {
+  flex: 1; /* Allow the image to take up appropriate space */
+  display: flex;
+  position: relative; /* This makes it possible to position children absolutely */
+  justify-content: flex-start; /* Align image to the left */
+}
+
+.achievements-image-1 {
+  max-width: 100%;
+  width: 400px; /* Set a fixed width for the image */
+  height: auto; /* Maintain aspect ratio */
+  mask-image: linear-gradient(to bottom, black 40%, transparent 80%);
+  -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 80%);
+  z-index: 1;
+}
+
+.achievements-title {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.achievements-text {
+  flex: 1; /* Allow the text to take up appropriate space */
+  text-align: left; /* Keep text aligned to the left */
+  padding-left: 40px; /* Add some padding to create space between the text and image */
+}
+
+.achievements-description {
+  font-size: 1.2em;
+  line-height: 1.5;
+  margin-bottom: 30px;
+}
+
+.achievements-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  color: white;
+  background-color: #00806a;
+  border-radius: 25px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.achievements-button:hover {
+  background-color: #004d40;
+}
+
+.section-premium-features {
+  padding: 60px 0px;
+  color: #004d40;
+  text-align: center;
+}
+
+.section-premium-features h2 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.section-premium-features p {
+  font-size: 1.2em;
+  margin-bottom: 40px;
+}
+
+.section-premium-features .section-line {
+  margin: 100px auto;
+}
+
+.premium-cards {
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  gap: 30px;
+  align-items: stretch; /* Make all cards stretch to the same height */
+}
+
+/* Wrapper for premium cards to apply background */
+.premium-cards-wrapper {
+  background-color: #004d40; /* Background behind the cards */
+  width: 100%;
+  padding: 30px 0; /* Padding to create space around the cards */
+}
+
+.premium-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 40px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 325px;
+  text-align: left;
+  position: relative; /* Set the card position to relative for absolute positioning of the button */
+}
+
+.premium-card.premium-card-special {
+  background-color: #00806a !important; /* Ensure this rule takes precedence */
+  color: white; /* White text color */
+  position: relative; /* Needed for the discount badge positioning */
+}
+
+.premium-card h3 {
+  font-size: 1.8em;
+  margin-bottom: 15px;
+}
+
+.premium-card .price {
+  font-size: 2.5em;
+  font-weight: bold;
+  margin-bottom: 15px;
+  position: relative;
+  display: inline-block;
+}
+
+.premium-card .price .price-duration {
+  font-size: 0.5em;
+}
+
+.premium-card.premium-card-special .price .original-price {
+  text-decoration: line-through;
+  font-size: 0.7em;
+  color: #ffcccb;
+  position: absolute;
+  top: -30px; /* Adjust as needed to position above the new price */
+  right: 0; /* Adjust this value for correct positioning */
+}
+
+.premium-card.premium-card-special .discount-badge {
+  position: absolute;
+  top: 30px;
+  right: 5px;
+  background-color: #ffcc00;
+  color: #004d40;
+  padding: 5px 10px;
+  border-radius: 35px;
+  font-size: 0.9em;
+  font-weight: bold;
+  text-align: center;
+  rotate: 25deg;
+  z-index: 1; /* Ensure it appears on top */
+}
+
+.premium-button {
+  padding: 15px 20px;
+  background-color: #00806a;
+  width: 60%;
+  color: white;
+  text-decoration: none;
+  border-radius: 25px;
+  transition: background-color 0.3s ease;
+  position: absolute; /* Position the button absolutely within the card */
+  bottom: 10px; /* Keep the button at the bottom */
+  left: 50%; /* Position the button's left edge at the center of the card */
+  transform: translateX(-50%); /* Center the button by moving it to the left by 50% of its width */
+  display: flex; /* Make the button a flex container */
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+}
+
+.premium-button:hover {
+  background-color: #004d40;
+}
+
+.premium-card .features-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 20px; /* Add consistent margin to separate from the button */
+  flex-grow: 1; /* Allow the list to grow and take up available space */
+}
+
+.features-list li {
+  margin-bottom: 10px;
+}
+
+/* Special Card Styling */
+.premium-card.premium-card-special .premium-button {
+  background-color: white;
+  color: #00806a;
+}
+
+.premium-card.premium-card-special .premium-button:hover {
+  background-color: #004d40; /* Darken on hover */
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.premium-card.premium-card-special .price span {
+  color: white; /* White text color */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.premium-card.premium-card-special h3,
+.premium-card.premium-card-special p,
+.premium-card.premium-card-special .features-list li {
+  color: white !important; /* Ensure all text is white */
+}
+
+.section-partners {
+  background-color: #fff; /* Light grey background for the section */
+  padding: 60px 20px; /* Adequate padding */
+  text-align: center; /* Center align text and content */
+}
+
+.section-partners .section-line {
+  margin-top: 90px;
+  margin-bottom: 90px;
+}
+
+.section-partners h2 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  color: #004d40; /* Dark green text color to match your theme */
+}
+
+.section-partners p {
+  font-size: 1.2em;
+  margin-bottom: 40px;
+  color: #333; /* A darker shade for the paragraph text */
+}
+
+.partners-logos {
+  display: flex;
+  justify-content: center; /* Center the logos */
+  align-items: center;
+  gap: 50px; /* Space between logos */
+  flex-wrap: wrap; /* Wrap logos to the next line if needed */
+}
+
+.partner {
+  flex: 1 1 200px; /* Make each partner logo take up an equal amount of space, but no less than 200px */
+}
+
+.partner-logo {
+  max-width: 100%;
+  height: auto; /* Ensure logos maintain their aspect ratio */
+  max-height: 90px; /* Set a maximum height to keep logos uniform */
+}
+
+.faq-section {
+  padding: 60px 20px;
+  text-align: left;
+  color: #004d40; /* Dark green for the text */
+}
+
+.faq-section h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.faq-list {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faq-item {
+  padding: 20px;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+.faq-item:hover {
+  background-color: #f7f5f5;
+}
+
+.faq-title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.faq-item h3 {
+  font-size: 1.5rem;
+  margin: 0;
+  transition: color 0.5s ease;
+}
+
+.faq-item.open h3 {
+  color: #00806a;
+}
+
+.faq-item p {
+  margin: 10px 0 0;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+.faq-item.open p {
+  max-height: 200px; /* Adjust as needed */
+  opacity: 1;
+}
+
+.toggle-sign {
+  font-size: 1.5rem;
+  color: #00806a;
+  transition: transform 0.3s ease;
+}
+
+.faq-item.open .toggle-sign {
+  transform: rotate(180deg);
+}
+
+.footer-section {
+  color: #004d40; /* White text */
+  padding: 60px 20px;
+}
+
+.footer-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Light border */
+  padding-bottom: 20px;
+}
+
+.footer-logo-text {
+  margin-bottom: 20px;
+}
+
+.footer-slogan {
+  font-size: 1.5rem;
+  margin-top: 10px;
+  color: #004d40; /* White text color */
+}
+
+.footer-contact-links {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.footer-listen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer-listen h3 {
+  margin-bottom: 10px;
+}
+
+.footer-podcast-icon {
+  max-width: 40px;
+  margin: 0 10px;
+}
+
+.footer-links {
+  text-align: left;
+}
+
+.footer-links h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links ul li {
+  margin-bottom: 10px;
+}
+
+.footer-links ul li a {
+  color: #004d40;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links ul li a:hover {
+  color: #004d40; /* Pink hover effect */
+}
+
+.footer-contact {
+  text-align: left;
+}
+
+.footer-contact h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.footer-contact a {
+  color: #004d40;
+  text-decoration: none;
+  margin-bottom: 10px;
+  display: block;
+  font-size: 1.2rem;
+}
+
+.footer-contact a:hover {
+  color: #004d40; /* Pink hover effect */
+}
+
+.contact-button {
+  background-color: #004d40; /* Pink button background */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+  margin-top: 10px;
+  display: inline-block;
+}
+
+.contact-button:hover {
+  background-color: #004d40; /* Darker pink on hover */
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.9rem;
+}
+
+.footer-bottom-logo-img {
+  max-width: 100px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+.footer-bottom p {
+  color: #004d40; /* White text color */
+  margin: 5px 0;
 }
