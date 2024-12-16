@@ -34,7 +34,7 @@
 }
 
 .logo {
-  height: 50px; /* Ensure the logo height is fixed to avoid resizing issues */
+  height: 60px; /* Ensure the logo height is fixed to avoid resizing issues */
   margin-left: 20px;
   margin-right: 20px; /* Add some space between the logo and the nav buttons */
 }
@@ -84,10 +84,16 @@
 }
 
 .section-line {
-  width: 80%;
-  height: 1px;
+  width: 0; /* Start with zero width */
+  height: 2px;
   background: linear-gradient(to right, transparent, #00806a, transparent);
   margin: 20px auto;
+  transition: width 0.5s ease-out; /* Smooth transition */
+  transform-origin: center; /* Start growing from the center */
+}
+
+.section-line.animated {
+  width: 80%; /* Target width when fully expanded */
 }
 
 .section-tour-planner .section-line:first-of-type {
@@ -108,8 +114,8 @@
 }
 
 .app-description {
-  font-size: 4em; /* Adjust font size for the description */
-  margin: 20px 0;
+  font-size: 4.5em; /* Adjust font size for the description */
+  margin: 10px 0;
   display: block; /* Ensure description is block level */
   font-weight: 600;
   color: #00806a;
@@ -118,7 +124,16 @@
 
 .app-buttons {
   display: block; /* Ensure buttons container takes full width */
-  margin-top: 10px; /* Add margin-top to separate from description */
+}
+
+.app-blunt-explanation {
+  font-size: 1.5em;
+  color: #004d40;
+  max-width: 1200px;
+  margin: 0 auto;
+  line-height: 1.5;
+  margin-top: 40px;
+  margin-bottom: -60px;
 }
 
 .store-button-img {
@@ -519,17 +534,73 @@
 
 .get-info-image {
   display: flex;
-  position: relative; /* This makes it possible to position children absolutely */
-  justify-content: center; /* Center the image */
-  margin: 0 auto; /* Center the image container */
-  margin-top: 20px; /* Add space between the button and the image */
+  justify-content: center;
+  align-items: center;
+  position: relative; /* Enables absolute positioning for children */
 }
 
-.get-info-image-1 {
-  z-index: 1;
-  max-width: 100%; /* Ensure the image does not exceed the container width */
-  width: 400px; /* Set a fixed width for the image */
-  height: auto; /* Maintain aspect ratio */
+.get-info-image-center {
+  width: 350px; /* Slightly larger center image */
+  z-index: 1; /* Keep this below the left and right images */
+}
+
+.get-info-image-left,
+.get-info-image-right {
+  position: absolute; /* Overlay them on top of the center image */
+  top: 0;
+  z-index: 2; /* Ensure they appear above the center image */
+}
+
+/* Adjust initial positioning to overlay them more toward the center */
+.get-info-image-left {
+  left: 15%; /* Adjust this value to control initial overlap */
+  width: 275px;
+  height: auto;
+  margin-top: 165px;
+}
+
+.get-info-image-right {
+  right: 15%; /* Adjust this value to control initial overlap */
+  width: 262px;
+  height: auto;
+  margin-top: 154px;
+}
+
+
+@keyframes slideFromCenterLeft {
+  from {
+    transform: translateX(-150px); /* Start from the center */
+  }
+  to {
+    transform: translateX(-325px); /* Slide to the left position */
+  }
+}
+
+@keyframes slideFromCenterRight {
+  from {
+    transform: translateX(150px); /* Start from the center */
+  }
+  to {
+    transform: translateX(322px); /* Slide to the right position */
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+.pop-out-left {
+  animation: fadeIn 0.6s ease-out forwards, slideFromCenterLeft 1s ease-out forwards;
+}
+
+.pop-out-right {
+  animation: fadeIn 0.6s ease-out forwards, slideFromCenterRight 1s ease-out forwards;
 }
 
 .section-achievements {
@@ -574,10 +645,10 @@
 
 .achievements-image-1 {
   max-width: 100%;
-  width: 400px; /* Set a fixed width for the image */
+  width: 350px; /* Set a fixed width for the image */
   height: auto; /* Maintain aspect ratio */
-  mask-image: linear-gradient(to bottom, black 40%, transparent 80%);
-  -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 80%);
+  mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
   z-index: 1;
 }
 
@@ -704,6 +775,24 @@
   z-index: 1; /* Ensure it appears on top */
 }
 
+.free-card{
+  margin-top: 47px;
+}
+
+.premium-label-1 {
+  font-weight: bold;
+  font-size: 1.25em;
+  color: #004d40;
+  margin-bottom: 10px;
+}
+
+.premium-label-2 {
+  font-weight: bold;
+  font-size: 1.25em;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
 .premium-button {
   padding: 15px 20px;
   background-color: #00806a;
@@ -757,45 +846,109 @@
   color: white !important; /* Ensure all text is white */
 }
 
-.section-partners {
+.section-sponsors {
   background-color: #fff; /* Light grey background for the section */
   padding: 60px 20px; /* Adequate padding */
   text-align: center; /* Center align text and content */
 }
 
-.section-partners .section-line {
+.section-sponsors .section-line {
   margin-top: 90px;
   margin-bottom: 90px;
 }
 
-.section-partners h2 {
+.section-sponsors h2 {
   font-size: 2.5em;
   margin-bottom: 20px;
   color: #004d40; /* Dark green text color to match your theme */
 }
 
-.section-partners p {
+.section-sponsors p {
   font-size: 1.2em;
   margin-bottom: 40px;
   color: #333; /* A darker shade for the paragraph text */
 }
 
-.partners-logos {
+.sponsors-logos {
   display: flex;
   justify-content: center; /* Center the logos */
   align-items: center;
-  gap: 50px; /* Space between logos */
   flex-wrap: wrap; /* Wrap logos to the next line if needed */
 }
 
-.partner {
-  flex: 1 1 200px; /* Make each partner logo take up an equal amount of space, but no less than 200px */
+.sponsor {
+  flex: 1 1 200px; /* Make each sponsor logo take up an equal amount of space, but no less than 200px */
 }
 
-.partner-logo {
+.sponsor-logo {
   max-width: 100%;
   height: auto; /* Ensure logos maintain their aspect ratio */
   max-height: 90px; /* Set a maximum height to keep logos uniform */
+}
+
+.section-become-partner {
+  background-color: #fff;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.section-become-partner h2 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  color: #004d40;
+}
+
+.section-become-partner p {
+  font-size: 1.2em;
+  margin-bottom: 40px;
+  color: #333;
+}
+
+.become-partner-content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.become-partner-benefits {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 50px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.benefit-item {
+  flex: 1 1 200px;
+  max-width: 300px;
+  text-align: left;
+}
+
+.benefit-item h3 {
+  font-size: 1.5em;
+  color: #00806a;
+  margin-bottom: 10px;
+}
+
+.benefit-item p {
+  font-size: 1em;
+  color: #333;
+}
+
+.become-partner-button {
+  display: inline-block;
+  padding: 15px 30px;
+  background-color: #00806a;
+  color: white;
+  font-size: 1.2em;
+  border-radius: 25px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.become-partner-button:hover {
+  background-color: #004d40;
 }
 
 .faq-section {
@@ -885,7 +1038,7 @@
 }
 
 .footer-slogan {
-  font-size: 1.5rem;
+  font-size: 2rem;
   margin-top: 10px;
   color: #004d40; /* White text color */
 }
@@ -893,7 +1046,7 @@
 .footer-contact-links {
   display: flex;
   justify-content: space-around;
-  width: 100%;
+  width: 90%;
   margin-top: 20px;
 }
 
@@ -961,20 +1114,6 @@
   color: #004d40; /* Pink hover effect */
 }
 
-.contact-button {
-  background-color: #004d40; /* Pink button background */
-  color: white;
-  padding: 10px 20px;
-  border-radius: 25px;
-  text-decoration: none;
-  margin-top: 10px;
-  display: inline-block;
-}
-
-.contact-button:hover {
-  background-color: #004d40; /* Darker pink on hover */
-}
-
 .footer-bottom {
   text-align: center;
   margin-top: 20px;
@@ -982,8 +1121,9 @@
 }
 
 .footer-bottom-logo-img {
-  max-width: 100px;
+  max-width: 125px;
   margin-left: 10px;
+  margin-bottom: 10px;
   vertical-align: middle;
 }
 

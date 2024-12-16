@@ -5,16 +5,18 @@ import playstoreButton from './images/playstore-button.png';
 import appHome from './images/app-home.png';
 import appMap from './images/app-map.png';
 import appTours from './images/app-tours.png';
+import appLocations from './images/app-locations.png';
+import appLocations1 from './images/app-locations-1.png';
+import appLocations2 from './images/app-locations-2.png';
 import logo from './images/nottingham-trails-logo.png';
 import tourPlannerImage1 from './images/tour-planner-image-1.png';
 import tourPlannerImage2 from './images/tour-planner-image-2.png';
-import achievementshome from './images/achievements-home.png';
+import appachievements from './images/app-achievements.png';
 import featureImage1 from './images/feature-image-1.png';
 import featureImage2 from './images/feature-image-2.png';
 import featureImage3 from './images/feature-image-3.png';
 import nottinghamcity from './images/Nottingham+city+Council+logo.png';
 import fundedbyukgov from './images/funded-by-UK-government-logo.png';
-import leveluplogo from './images/Powered-by-Levelling-Up-Blue-Writing.png';
 import phslogo from './images/Pathway-Housing-Solutions-Building-Futures-big.png';
 
 function App() {
@@ -40,14 +42,65 @@ function App() {
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
     if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
+      window.scrollTo({
+        top: section.offsetTop - 100, // Adjust -100 to fit your header height
+        behavior: 'smooth',
+      });
     }
   };
-
+  
   useEffect(() => {
     const images = document.querySelectorAll('.app-image');
     images.forEach(image => image.classList.add('spring-up'));
   }, []);
+
+  useEffect(() => {
+    const section = document.querySelector('.get-info-image');
+    const leftImage = document.querySelector('.get-info-image-left');
+    const rightImage = document.querySelector('.get-info-image-right');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            leftImage.classList.add('pop-out-left');
+            rightImage.classList.add('pop-out-right');
+          }
+        });
+      },
+      { threshold: 0.5 } // Trigger when 50% of the section is visible
+    );
+
+    if (section) {
+      observer.observe(section);
+    }
+
+    return () => {
+      if (section) {
+        observer.unobserve(section);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const lines = document.querySelectorAll('.section-line');
+  
+    const lineObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animated');
+            observer.unobserve(entry.target); // Stop observing once animated
+          }
+        });
+      },
+      { threshold: 0.1 } // Trigger when 10% of the line is visible
+    );
+  
+    lines.forEach(line => lineObserver.observe(line));
+  
+    return () => lineObserver.disconnect(); // Clean up on unmount
+  }, []);  
 
   const FaqItem = ({ question, answer, isOpen, onClick }) => (
     <div className={`faq-item ${isOpen ? 'open' : ''}`} onClick={onClick}>
@@ -87,10 +140,6 @@ function App() {
       answer: "Yes! Nottingham Trails allows you to create custom virtual tours tailored to your interests. Choose from a variety of landmarks, set your preferences, and let the app guide you through your personalized adventure.",
     },
     {
-      question: "Is there offline access?",
-      answer: "Offline access is available with our premium subscription. This feature allows you to download maps and content, so you can explore Nottingham even without an internet connection.",
-    },
-    {
       question: "How do achievements and badges work?",
       answer: "Achievements and badges are awarded as you explore Nottingham, complete tours, and participate in quizzes. Collect them as milestones to track your progress and celebrate your journey through the city.",
     }
@@ -107,9 +156,9 @@ function App() {
           <img src={logo} alt="Nottingham Trails Logo" className="logo" />
           <nav className="header-nav">
             <div className="nav-button" onClick={() => scrollToSection('features')}>Features</div>
-            <div className="nav-button" onClick={() => scrollToSection('about-us')}>Premium</div>
-            <div className="nav-button" onClick={() => scrollToSection('about-us')}>Partners</div>
-            <div className="nav-button" onClick={() => scrollToSection('about-us')}>FAQs</div>
+            <div className="nav-button" onClick={() => scrollToSection('premium-features')}>Premium</div>
+            <div className="nav-button" onClick={() => scrollToSection('become-partner')}>Partner</div>
+            <div className="nav-button" onClick={() => scrollToSection('faq')}>FAQs</div>
             <div className="nav-button" onClick={() => scrollToSection('contact-us')}>Contact Us</div>
           </nav>
         </div>
@@ -130,6 +179,10 @@ function App() {
             <img src={playstoreButton} alt="Get it on Google Play" className="store-button-img" />
           </a>
         </div>
+        <p className="app-blunt-explanation">
+          Nottingham Trails is a virtual tour app that helps you explore Nottingham's landmarks and history. Experience guided tours, create custom adventures, and engage with interactive features—all in one place.
+        </p>
+
         <div className="app-images-container">
           <div className="app-image-wrapper">
             <img src={appTours} alt="App Tours" className="app-image left" />
@@ -155,15 +208,15 @@ function App() {
           <div className="feature-card">
             <img src={featureImage2} alt="Virtual AI Tour Guide" className="feature-card-image" />
             <div className="card-content">
-              <h3>Virtual AI Tour Guide</h3>
-              <p>Get answers on the go with our AI tour guide, ready to assist with any questions during your journey.</p>
+              <h3>Quizzes</h3>
+              <p>Test your knowledge with fun quizzes on Nottingham's landmarks. Perfect for making learning fun for the whole family.</p>
             </div>
           </div>
           <div className="feature-card">
             <img src={featureImage3} alt="Quizzes" className="feature-card-image" />
             <div className="card-content">
-              <h3>Quizzes</h3>
-              <p>Test your knowledge with fun quizzes on Nottingham's landmarks. Perfect for making learning fun for the whole family.</p>
+            <h3>Virtual AI Tour Guide</h3>
+            <p>Get answers on the go with our AI tour guide Robin, ready to assist with any questions during your journey around Nottingham.</p>
             </div>
           </div>
         </div>
@@ -201,8 +254,10 @@ function App() {
           </div>
         </div>
         <div className="get-info-image">
-          <div class="glow-wrapper">
-            <img src={appHome} alt="Tour Planner" className="get-info-image-1" />
+          <div className="glow-wrapper">
+            <img src={appLocations1} alt="App Location 1" className="get-info-image-left" />
+            <img src={appLocations} alt="App Locations" className="get-info-image-center" />
+            <img src={appLocations2} alt="App Location 2" className="get-info-image-right" />
           </div>
         </div>
         <div className="section-line"></div>
@@ -211,8 +266,8 @@ function App() {
       <section id="achievements" className="section-achievements">
         <div className="achievements-content">
           <div className="achievements-image">
-            <div class="glow-wrapper">
-              <img src={achievementshome} alt="Tour Planner" className="achievements-image-1" />
+            <div className="glow-wrapper">
+              <img src={appachievements} alt="Tour Planner" className="achievements-image-1" />
             </div>
           </div>
           <div className="achievements-text">
@@ -233,7 +288,7 @@ function App() {
         <div className="premium-cards-wrapper">
           <div className="premium-cards">
             <div className="premium-card">
-              <h3>Basic</h3>
+              <h3 className="free-card">Basic</h3>
               <p className="price">Free<span className="price-duration">/ forever</span></p>
               <p>Get started with essential features.</p>
               <a href="#get-started" className="premium-button">Get started</a>
@@ -249,6 +304,7 @@ function App() {
               </ul>
             </div>
             <div className="premium-card">
+              <div className="premium-label-1">Premium</div>
               <h3>Monthly Subscription</h3>
               <p className="price">£6.99<span className="price-duration">/ month</span></p>
               <p>Enhance your experience.</p>
@@ -267,6 +323,7 @@ function App() {
             </div>
             <div className="premium-card premium-card-special">
               <div className="discount-badge">Launch Discount!<br/>30% OFF</div>
+              <div className="premium-label-2">Premium</div>
               <h3>One-time Purchase</h3>
               <p className="price">
                 £17.49<span className="original-price">£24.99</span>
@@ -285,21 +342,42 @@ function App() {
 
       <div className="section-line"></div>
 
-      <section id="partners" className="section-partners">
-        <div className="partners-content">
-          <h2>Our Partners</h2>
+      <section id="sponsors" className="section-sponsors">
+        <div className="sponsors-content">
+          <h2>Our Sponsors</h2>
           <p>We are proud to collaborate with leading organisations to bring the best experiences to you.</p>
-          <div className="partners-logos">
-            <div className="partner">
-              <img src={nottinghamcity} alt="Nottingham City Council" className="partner-logo" />
+          <div className="sponsors-logos">
+            <div className="sponsor">
+              <img src={nottinghamcity} alt="Nottingham City Council" className="sponsor-logo" />
             </div>
-            <div className="partner">
-              <img src={fundedbyukgov} alt="UK Government" className="partner-logo" />
-            </div>
-            <div className="partner">
-              <img src={leveluplogo} alt="Levelling Up" className="partner-logo" />
+            <div className="sponsor">
+              <img src={fundedbyukgov} alt="UK Government" className="sponsor-logo" />
             </div>
           </div>
+        </div>
+      </section>
+
+      <div className="section-line"></div>
+
+      <section id="become-partner" className="section-become-partner">
+        <div className="become-partner-content">
+          <h2>Become a Partner</h2>
+          <p>Join us in shaping the future of Nottingham's exploration experience. Partner with Nottingham Trails and reach thousands of explorers eager to discover the city's hidden gems.</p>
+          <div className="become-partner-benefits">
+            <div className="benefit-item">
+              <h3>Expand Your Reach</h3>
+              <p>Connect with a broad audience through our platform.</p>
+            </div>
+            <div className="benefit-item">
+              <h3>Collaborate on Tours</h3>
+              <p>Create custom tours that highlight your organisation's contributions.</p>
+            </div>
+            <div className="benefit-item">
+              <h3>Support the Community</h3>
+              <p>Help us promote Nottingham's rich history and culture.</p>
+            </div>
+          </div>
+          <a href="#contact-us" className="become-partner-button">Partner with Us</a>
         </div>
       </section>
 
@@ -339,14 +417,13 @@ function App() {
               <ul>
                 <li><a href="#features" onClick={() => scrollToSection('features')}>Features</a></li>
                 <li><a href="#premium-features" onClick={() => scrollToSection('premium-features')}>Premium</a></li>
-                <li><a href="#partners" onClick={() => scrollToSection('partners')}>Partners</a></li>
+                <li><a href="#become-partner" onClick={() => scrollToSection('become-partner')}>Partner</a></li>
                 <li><a href="#about-us" onClick={() => scrollToSection('about-us')}>About Us</a></li>
               </ul>
             </div>
             <div className="footer-contact">
               <h3>Contact</h3>
               <a href="mailto:info@nottinghamtrails.app">info@nottinghamtrails.app</a>
-              <a href="#contact-us" className="contact-button">Contact Us</a>
             </div>
           </div>
         </div>
@@ -355,7 +432,6 @@ function App() {
           <p>© 2024 Nottingham Trails. All rights reserved.</p>
         </div>
       </section>
-
 
       <section id="about-us" className="section-about">
         {/* Add your "The Story" section content here */}
